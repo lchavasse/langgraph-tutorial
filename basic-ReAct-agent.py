@@ -1,7 +1,6 @@
 from typing import Literal
 
 from langgraph.graph import StateGraph, MessagesState, START, END
-from langgraph.prebuilt import create_react_agent
 from langchain_anthropic import ChatAnthropic
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_core.tools import tool
@@ -56,7 +55,7 @@ builder.add_node("agent", agent)
 builder.add_node("tools", tool_node)
 
 builder.add_edge(START, "agent")
-builder.add_conditional_edges("agent", tools_condition, ["tools", END])
+builder.add_conditional_edges("agent", tool_router, ["tools", END])
 builder.add_edge("tools", "agent")
 
 graph = builder.compile(checkpointer=memory)
