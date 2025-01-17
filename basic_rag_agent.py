@@ -75,7 +75,6 @@ llm_with_tools = llm.bind_tools(tools)
 def agent(state: State):
     messages = state["messages"]
     response = llm_with_tools.invoke(messages)
-    print(response)
     return {"messages": [response]}
 
 builder = StateGraph(State)
@@ -87,10 +86,12 @@ builder.add_edge(START, "agent")
 builder.add_conditional_edges("agent", tools_condition, ["tools", END])
 builder.add_edge("tools", "agent")
 
-graph = builder.compile(checkpointer=memory)
+rag_graph = builder.compile(checkpointer=memory)
 
+### UNCOMMENT THIS TO RUN RAG AGENT ONLY ###
+"""
 def stream_graph_updates(user_input: str):
-    for event in graph.stream(
+    for event in rag_graph.stream(
         {"messages": [("user", user_input)]},
         {"configurable": {"thread_id": "1"}},
     ):
@@ -109,3 +110,4 @@ while True:
     except Exception as e:
         print(f"Error occurred: {str(e)}")
         break
+"""
