@@ -1,6 +1,7 @@
 # LangGraph Tutorial
 
 This is a tutorial for LangGraph, a framework for building agents with LangChain and LangGraph.
+It accompanies the tutorial [here](https://www.lachlan.xyz/tutorials).
 
 ## Basic ReAct Agent
 
